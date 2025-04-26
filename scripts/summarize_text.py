@@ -3,7 +3,6 @@ import emoji
 from transformers import pipeline
 
 print("Loading Hugging Face summarizer pipelines...")
-# Initialize the Hugging Face summarizer pipelines
 summarizer_en = pipeline('summarization', model='facebook/bart-large-cnn')
 summarizer_ru = pipeline('summarization', model='IlyaGusev/mbart_ru_sum_gazeta')
 
@@ -19,10 +18,8 @@ def preprocess_text(text: str) -> str:
     Returns:
         str: The preprocessed text with emojis and unwanted characters removed.
     """
-    # Remove emojis
     text = emoji.replace_emoji(text, replace='')
 
-    # Remove unwanted characters except specified symbols
     text = re.sub(r'[^a-zA-Zа-яА-Я0-9\s,.\-\'\";/*@#$%^&(){}[\]<>|№—]', '', text)
 
     return text
@@ -43,19 +40,15 @@ def summarize_text(text: str, language: str = 'en') -> str:
     """
     print(f"Summarizing text for language: {language}")
 
-    # Split text into tokens to count them
     tokens = text.split()
     num_tokens = len(tokens)
 
-    # Return original text if it's less than 50 tokens
     if num_tokens < 50:
         print(f"Text has {num_tokens} tokens, returning original text.")
         return text
 
-    # Preprocess the text
     text = preprocess_text(text)
 
-    # Determine max_length and min_length based on the length of the text
     if num_tokens < 500:
         max_length = 100
         min_length = 50
@@ -65,7 +58,6 @@ def summarize_text(text: str, language: str = 'en') -> str:
 
     print(f"Text length: {num_tokens} tokens, Max length: {max_length}, Min length: {min_length}")
 
-    # Perform summarization based on language
     if language == 'ru':
         summary = summarizer_ru(text, max_length=max_length, min_length=min_length, do_sample=False)
     else:

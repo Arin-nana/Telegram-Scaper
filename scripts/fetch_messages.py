@@ -3,13 +3,12 @@ from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
 from entities.telegram_message import TelegramMessage
 
-# Ваш API ID и API Hash от my.telegram.org
-API_ID = 25997160  # Ваш настоящий API ID здесь
-API_HASH = 'a52e3a0c9dadaf6a42533ee09c7638de'  # Ваш настоящий API Hash здесь
+API_ID = 0 
+API_HASH = 'e'  
 
 def fetch_messages(n_hours: int, channel: str, session_string: str):
     client = TelegramClient(StringSession(session_string), API_ID, API_HASH)
-    client.start()  # Это использует сохраненную строку сессии
+    client.start()  
 
     now = datetime.utcnow()
     since_time = now - timedelta(hours=n_hours)
@@ -18,7 +17,7 @@ def fetch_messages(n_hours: int, channel: str, session_string: str):
 
     async def main():
         async for message in client.iter_messages(channel, offset_date=since_time):
-            if message.message:  # Проверка наличия текста в сообщении
+            if message.message: 
                 messages.append(TelegramMessage(
                     text=message.message,
                     datetime=message.date,

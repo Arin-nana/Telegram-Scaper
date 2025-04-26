@@ -42,7 +42,7 @@ class TestSummarizeText(unittest.TestCase):
         """
         summary = summarize_text(text, language='en')
         self.log_summary(text, summary)
-        self.assertEqual(summary, text)  # Ensure the original text is returned
+        self.assertEqual(summary, text) 
         self.assertIsInstance(summary, str)
 
     def test_long_text_russian(self):
@@ -80,7 +80,7 @@ class TestSummarizeText(unittest.TestCase):
         """
         summary = summarize_text(text, language='ru')
         self.log_summary(text, summary)
-        self.assertEqual(summary, text)  # Ensure the original text is returned
+        self.assertEqual(summary, text) 
         self.assertIsInstance(summary, str)
 
     def test_preprocess_text(self):
